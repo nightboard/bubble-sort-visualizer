@@ -46,41 +46,11 @@ class Bubbles {
     return parseInt(node.textContent);
   }
 
-  delayTime(time) {
-    return new Promise((work) => {
-      setTimeout(() => {
-        work();
-      }, time);
-    });
-  }
-
-  async makeBubbleActive(bubble1, bubble2) {
-    await this.delayTime(this.delay);
-    bubble1.classList.add("active");
-    await this.delayTime(this.delay);
-    bubble2.classList.add("active");
-  }
-
-  async makeBubbleNormal(bubble1, bubble2) {
-    await this.delayTime(this.delay);
-    bubble1.classList.remove("active");
-    await this.delayTime(this.delay);
-    bubble2.classList.remove("active");
-  }
-
-  async swapBubbles(bubble1, bubble2) {
-    const bubble1Top = bubble1.style.top;
-    const bubble2Top = bubble2.style.top;
-    await this.makeBubbleActive(bubble1, bubble2);
-    await this.delayTime(this.delay);
-    // swap property
-    bubble1.style.top = bubble2Top;
-    bubble2.style.top = bubble1Top;
-    await this.makeBubbleNormal(bubble1, bubble2);
-  }
-
-  async bubbleSort(selector) {
-    const nodes = document.querySelector(selector).children;
+  // biggest mistack here is i am changing top position of the array.
+  // but not the actual elements so this is bug basically.
+  bubbleSort(nodes) {
+    // This is creating a copy man!!
+    // const nodes = [...document.querySelector(selector).children];
     let isSwapped = false;
 
     for (let i = 0; i < this.count; i++) {
@@ -88,21 +58,40 @@ class Bubbles {
         if (this.getBubbleValue(nodes[j]) > this.getBubbleValue(nodes[j + 1])) {
           isSwapped = true;
           // swap elements | swap top property of bubble
-          this.swapBubbles(nodes[j], nodes[j + 1]);
-          await this.delayTime(this.delay);
+
+          const temp2 = nodes[j];
+          nodes[j] = nodes[j + 1];
+          nodes[j + 1] = temp2;
+
+          const temp = nodes[j].style.top;
+          nodes[j].style.top = nodes[j + 1].style.top;
+          nodes[j + 1].style.top = temp;
         }
       }
-
-      console.log(nodes);
-
       if (isSwapped == false) {
         break;
       }
       isSwapped = false;
+    }
+
+    for (let i = 0; i < this.count; i++) {
+      console.log(
+        `nodes[${i}] : ${nodes[i].textContent}, nodes[i].top : ${nodes[i].style.top}`
+      );
     }
   }
 }
 
 const bubbles = new Bubbles(5);
 bubbles.generateBubbles(".bubble-container");
-bubbles.bubbleSort(".bubble-container");
+
+const nodes = document.querySelector(".bubble-container").childNodes;
+console.log("-------------------------------------------");
+
+bubbles.bubbleSort(nodes);
+
+for (let i = 0; i < nodes.length; i++) {
+  console.log(
+    `nodes[${i}] : ${nodes[i].textContent}, nodes[i].top : ${nodes[i].style.top}`
+  );
+}
