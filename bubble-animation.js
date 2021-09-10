@@ -8,11 +8,19 @@ function getRandomArbitrary(min, max) {
 }
 
 function getLeftPosition() {
-  return getRandomArbitrary(0, 40);
+  return (
+    getRandomArbitrary(0, 40) +
+    getRandomArbitrary(0, 60) -
+    getRandomArbitrary(0, 20)
+  );
 }
 
 function getTopPosition() {
   return getRandomArbitrary(0, 100);
+}
+
+function getScale() {
+  return getRandomArbitrary(0, 30) / 100;
 }
 
 function getDummyBubble() {
@@ -26,7 +34,7 @@ function getDummyBubble() {
   dummyBubble.style.animation = `animateBubble ${verticalTime}s linear infinite, sideWays ${horizontalTime}s ease-in-out infinite alternate`;
   dummyBubble.style.top = `${topPosition}%`;
   dummyBubble.style.left = `${leftPosition}%`;
-  dummyBubble.style.transform = `scale(${scale})`;
+  dummyBubble.style.transform = `scale(${getScale()})`;
   return dummyBubble;
 }
 
