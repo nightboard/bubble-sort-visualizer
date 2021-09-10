@@ -56,7 +56,9 @@ img {
   margin: auto;
 }
 
+/* ------------------------------------------------------------------------- */
 /* bubble backgroud animation */
+/* Credit :  https://codepen.io/Mark_Bowley/pen/mEtqj */
 
 #background-wrap {
   bottom: 0;

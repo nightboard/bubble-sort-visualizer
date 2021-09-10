@@ -96,11 +96,15 @@ bubbles.generateBubbles(".bubble-container");
 // get buttons
 const refreshButtton = document.querySelector(".refresh");
 const playButton = document.querySelector(".play");
+let isPlayButtonDisabled = false;
 
 refreshButtton.addEventListener("click", () => {
   bubbles.generateBubbles(".bubble-container");
 });
 
 playButton.addEventListener("click", () => {
-  bubbles.bubbleSort(".bubble-container");
+  if (isPlayButtonDisabled == false) {
+    bubbles.bubbleSort(".bubble-container");
+    isPlayButtonDisabled = true;
+  }
 });
