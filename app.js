@@ -33,8 +33,17 @@ class Bubbles {
     return bubble;
   }
 
+  getDelay(delay = this.delay) {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve();
+      }, delay);
+    });
+  }
+
   generateBubbles(selector) {
     const container = document.querySelector(selector);
+    container.innerHTML = "";
     for (let i = 0; i < this.count; i++) {
       const bubble = this.getBubble(this.max_radius);
       bubble.style.top = `${i * 50}px`;
@@ -46,38 +55,52 @@ class Bubbles {
     return parseInt(node.textContent);
   }
 
-  bubbleSort(selector) {
-    const container = document.querySelector(selector);
+  async bubbleSort(selector) {
     const nodes = document.querySelector(selector).children;
+    const container = document.querySelector(selector);
     let isSwapped = false;
 
     for (let i = 0; i < this.count; i++) {
       for (let j = 0; j < this.count - i - 1; j++) {
-        if (this.getBubbleValue(nodes[j]) > this.getBubbleValue(nodes[j + 1])) {
+        // make bubbles active
+        nodes[j].classList.add("active");
+        nodes[j + 1].classList.add("active");
+        await this.getDelay(500);
+
+        // bubble sort condition
+        if (this.getBubbleValue(nodes[j]) < this.getBubbleValue(nodes[j + 1])) {
           isSwapped = true;
-          // swap elements | swap top property of bubble
+          // swap the bubbles
           const temp = nodes[j].style.top;
           nodes[j].style.top = nodes[j + 1].style.top;
           nodes[j + 1].style.top = temp;
-
+          await this.getDelay(1000);
           container.insertBefore(nodes[j + 1], nodes[j]);
         }
+
+        // make bubbles normal
+        nodes[j].classList.remove("active");
+        nodes[j + 1].classList.remove("active");
+        await this.getDelay(500);
       }
-      console.log(nodes);
       if (isSwapped == false) {
         break;
       }
       isSwapped = false;
-    }
-
-    for (let i = 0; i < this.count; i++) {
-      console.log(
-        `nodes[${i}] : ${nodes[i].textContent}, nodes[i].top : ${nodes[i].style.top}`
-      );
     }
   }
 }
 
 const bubbles = new Bubbles(5);
 bubbles.generateBubbles(".bubble-container");
-bubbles.bubbleSort(".bubble-container");
+// get buttons
+const refreshButtton = document.querySelector(".refresh");
+const playButton = document.querySelector(".play");
+
+refreshButtton.addEventListener("click", () => {
+  bubbles.generateBubbles(".bubble-container");
+});
+
+playButton.addEventListener("click", () => {
+  bubbles.bubbleSort(".bubble-container");
+});
