@@ -100,6 +100,7 @@ let isPlayButtonDisabled = false;
 
 refreshButtton.addEventListener("click", () => {
   bubbles.generateBubbles(".bubble-container");
+  isPlayButtonDisabled = false;
 });
 
 playButton.addEventListener("click", () => {
