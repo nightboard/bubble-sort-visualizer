@@ -46,11 +46,9 @@ class Bubbles {
     return parseInt(node.textContent);
   }
 
-  // biggest mistack here is i am changing top position of the array.
-  // but not the actual elements so this is bug basically.
-  bubbleSort(nodes) {
-    // This is creating a copy man!!
-    // const nodes = [...document.querySelector(selector).children];
+  bubbleSort(selector) {
+    const container = document.querySelector(selector);
+    const nodes = document.querySelector(selector).children;
     let isSwapped = false;
 
     for (let i = 0; i < this.count; i++) {
@@ -58,16 +56,14 @@ class Bubbles {
         if (this.getBubbleValue(nodes[j]) > this.getBubbleValue(nodes[j + 1])) {
           isSwapped = true;
           // swap elements | swap top property of bubble
-
-          const temp2 = nodes[j];
-          nodes[j] = nodes[j + 1];
-          nodes[j + 1] = temp2;
-
           const temp = nodes[j].style.top;
           nodes[j].style.top = nodes[j + 1].style.top;
           nodes[j + 1].style.top = temp;
+
+          container.insertBefore(nodes[j + 1], nodes[j]);
         }
       }
+      console.log(nodes);
       if (isSwapped == false) {
         break;
       }
@@ -84,14 +80,4 @@ class Bubbles {
 
 const bubbles = new Bubbles(5);
 bubbles.generateBubbles(".bubble-container");
-
-const nodes = document.querySelector(".bubble-container").childNodes;
-console.log("-------------------------------------------");
-
-bubbles.bubbleSort(nodes);
-
-for (let i = 0; i < nodes.length; i++) {
-  console.log(
-    `nodes[${i}] : ${nodes[i].textContent}, nodes[i].top : ${nodes[i].style.top}`
-  );
-}
+bubbles.bubbleSort(".bubble-container");
