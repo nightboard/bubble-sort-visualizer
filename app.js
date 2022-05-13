@@ -1,35 +1,36 @@
 class Bubbles {
-  constructor(count, max_radius = 100, delay = 1000) {
+  constructor(count, delay = 1000) {
     this.count = count;
-    this.max_radius = max_radius;
     this.delay = delay;
+    this.arr = [];
+    this.index = 0;
+
+    let sum = 0;
+    for(let i=0; i<count; i++)
+    {
+      this.arr.push(Math.random());
+      sum += this.arr[this.arr.length-1];
+    }
+    console.log(sum)
+    for(let i=0; i<count; i++)
+    {
+      this.arr[i] = (this.arr[i]/sum)*100;
+      // z += this.arr[i];
+    }
   }
 
   getRandomRadius() {
-    let radius = Math.floor(Math.random() * this.max_radius + 1);
-    if (radius <= 20) {
-      radius += 20;
-    }
-    if (radius >= this.max_radius - 10) {
-      radius -= 20;
-    }
-    if (radius >= this.max_radius - 20) {
-      radius -= 10;
-    }
-    if (radius >= this.max_radius - 30) {
-      radius -= 10;
-    }
-    return radius;
+    return this.arr[this.index++]
   }
 
   getBubble() {
     const radius = this.getRandomRadius();
     const bubble = document.createElement("div");
     bubble.classList.add("bubble");
-    bubble.style.width = `${radius * 2.5}px`;
-    bubble.style.height = `${radius * 2.5}px`;
-    bubble.style.lineHeight = `${radius * 2.5}px`;
-    bubble.textContent = radius;
+    bubble.style.width = `${radius}%`;
+    bubble.style.height = `${radius}%`;
+    // bubble.style.lineHeight = `${radius}px`;
+    bubble.textContent = String(Math.round(radius));
     return bubble;
   }
 
@@ -45,8 +46,8 @@ class Bubbles {
     const container = document.querySelector(selector);
     container.innerHTML = "";
     for (let i = 0; i < this.count; i++) {
-      const bubble = this.getBubble(this.max_radius);
-      bubble.style.top = `${i * 50}px`;
+      const bubble = this.getBubble();
+      bubble.style.top = '0px';
       container.appendChild(bubble);
     }
   }
@@ -83,7 +84,7 @@ class Bubbles {
         nodes[j + 1].classList.remove("active");
         await this.getDelay(500);
       }
-      if (isSwapped == false) {
+      if (isSwapped === false) {
         break;
       }
       isSwapped = false;
@@ -91,7 +92,7 @@ class Bubbles {
   }
 }
 
-const bubbles = new Bubbles(5);
+var bubbles = new Bubbles(5);
 bubbles.generateBubbles(".bubble-container");
 // get buttons
 const refreshButtton = document.querySelector(".refresh");
@@ -99,12 +100,16 @@ const playButton = document.querySelector(".play");
 let isPlayButtonDisabled = false;
 
 refreshButtton.addEventListener("click", () => {
+
+  document.getElementsByClassName("bubble-container")[0].innerHTML = "";
+  bubbles = new Bubbles(5);
   bubbles.generateBubbles(".bubble-container");
+
   isPlayButtonDisabled = false;
 });
 
 playButton.addEventListener("click", () => {
-  if (isPlayButtonDisabled == false) {
+  if (isPlayButtonDisabled === false) {
     bubbles.bubbleSort(".bubble-container");
     isPlayButtonDisabled = true;
   }

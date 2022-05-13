@@ -1,7 +1,15 @@
 * {
-  margin: 0px;
-  padding: 0px;
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
+}
+
+#bubbleBox
+{
+  width: 40%;
+  height: 100vh;
+
+  margin: auto;
 }
 
 body {
@@ -16,10 +24,10 @@ body {
     rgba(255, 255, 255, 0.6),
     rgba(255, 255, 255, 0.1)
   );
-  backdrop-filter: blue(50px);
+  backdrop-filter: blur(50px);
   border-radius: 50%;
   text-align: center;
-  font-size: 1.1rem;
+  font-size: clamp(10px,1vw,7px);
   font-weight: bold;
   position: relative;
   left: 50%;
@@ -35,14 +43,15 @@ body {
 
 .bubble-container {
   padding: 2rem;
-  height: 100vh;
-  position: relative;
+  height: 100%;
+  /*position: relative;*/
+  overflow: scroll;
 }
 
 .controller {
   position: absolute;
-  bottom: 0px;
-  right: 0px;
+  bottom: 0;
+  right: 0;
   display: flex;
   flex-direction: column;
 }
@@ -100,7 +109,7 @@ img {
 
 @-webkit-keyframes sideWays {
   0% {
-    margin-left: 0px;
+    margin-left: 0;
   }
   100% {
     margin-left: 50px;
@@ -109,7 +118,7 @@ img {
 
 @-moz-keyframes sideWays {
   0% {
-    margin-left: 0px;
+    margin-left: 0;
   }
   100% {
     margin-left: 50px;
@@ -118,7 +127,7 @@ img {
 
 @keyframes sideWays {
   0% {
-    margin-left: 0px;
+    margin-left: 0;
   }
   100% {
     margin-left: 50px;
@@ -133,11 +142,11 @@ img {
   border-radius: 50%;
 
   -webkit-box-shadow: 0 20px 30px rgba(0, 0, 0, 0.2),
-    inset 0px 10px 30px 5px rgba(255, 255, 255, 1);
+    inset 0 10px 30px 5px rgba(255, 255, 255, 1);
   -moz-box-shadow: 0 20px 30px rgba(0, 0, 0, 0.2),
-    inset 0px 10px 30px 5px rgba(255, 255, 255, 1);
+    inset 0 10px 30px 5px rgba(255, 255, 255, 1);
   box-shadow: 0 20px 30px rgba(0, 0, 0, 0.2),
-    inset 0px 10px 30px 5px rgba(255, 255, 255, 1);
+    inset 0 10px 30px 5px rgba(255, 255, 255, 1);
 
   height: 200px;
   position: absolute;
@@ -145,44 +154,15 @@ img {
 }
 
 .bubble-dummy:after {
-  background: -moz-radial-gradient(
-    center,
-    ellipse cover,
-    rgba(255, 255, 255, 0.5) 0%,
-    rgba(255, 255, 255, 0) 70%
-  ); /* FF3.6+ */
-  background: -webkit-gradient(
-    radial,
-    center center,
-    0px,
-    center center,
-    100%,
-    color-stop(0%, rgba(255, 255, 255, 0.5)),
-    color-stop(70%, rgba(255, 255, 255, 0))
-  ); /* Chrome,Safari4+ */
-  background: -webkit-radial-gradient(
-    center,
-    ellipse cover,
-    rgba(255, 255, 255, 0.5) 0%,
-    rgba(255, 255, 255, 0) 70%
-  ); /* Chrome10+,Safari5.1+ */
-  background: -o-radial-gradient(
-    center,
-    ellipse cover,
-    rgba(255, 255, 255, 0.5) 0%,
-    rgba(255, 255, 255, 0) 70%
-  ); /* Opera 12+ */
-  background: -ms-radial-gradient(
-    center,
-    ellipse cover,
-    rgba(255, 255, 255, 0.5) 0%,
-    rgba(255, 255, 255, 0) 70%
-  ); /* IE10+ */
+
+
+
   background: radial-gradient(
     ellipse at center,
     rgba(255, 255, 255, 0.5) 0%,
     rgba(255, 255, 255, 0) 70%
   ); /* W3C */
+
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#80ffffff', endColorstr='#00ffffff',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
 
   -webkit-border-radius: 50%;
