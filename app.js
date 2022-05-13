@@ -72,11 +72,25 @@ class Bubbles {
         if (this.getBubbleValue(nodes[j]) < this.getBubbleValue(nodes[j + 1])) {
           isSwapped = true;
           // swap the bubbles
-          const temp = nodes[j].style.top;
-          nodes[j].style.top = nodes[j + 1].style.top;
-          nodes[j + 1].style.top = temp;
+          // const temp = nodes[j].style.top;
+          // nodes[j].style.top = nodes[j + 1].style.top;
+          // nodes[j + 1].style.top = temp;
+
+          let a = nodes[j].style.width;
+          let b = nodes[j].style.height;
+
+          nodes[j].style.width = nodes[j+1].style.width;
+          nodes[j].style.height = nodes[j+1].style.height;
+
+          nodes[j+1].style.height = b;
+          nodes[j+1].style.width = a;
+
+          let t = nodes[j+1].textContent;
+          nodes[j+1].textContent=nodes[j].textContent;
+          nodes[j].textContent = t;
+
           await this.getDelay(1000);
-          container.insertBefore(nodes[j + 1], nodes[j]);
+          // container.insertBefore(nodes[j + 1], nodes[j]);
         }
 
         // make bubbles normal
@@ -109,6 +123,8 @@ bubbleCount.addEventListener("input", (e)=>{
   document.getElementsByClassName("bubble-container")[0].innerHTML = "";
 
   bubbles.generateBubbles(".bubble-container");
+
+  isPlayButtonDisabled = false;
 });
 
 

@@ -36,7 +36,7 @@ body {
   position: relative;
   left: 50%;
   transform: translateX(-50%);
-  transition: background 0.5s, top 1s ease 0s;
+  transition: all 0.5s, top 1s ease 0s;
 }
 .bubble.active {
   background-image: linear-gradient(
