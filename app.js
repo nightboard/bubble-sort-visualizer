@@ -97,7 +97,20 @@ bubbles.generateBubbles(".bubble-container");
 // get buttons
 const refreshButtton = document.querySelector(".refresh");
 const playButton = document.querySelector(".play");
+const bubbleCount = document.getElementById("bubbleCount");
 let isPlayButtonDisabled = false;
+
+
+bubbleCount.addEventListener("input", (e)=>{
+
+  let value = bubbleCount.value;
+
+  bubbles = new Bubbles(value);
+  document.getElementsByClassName("bubble-container")[0].innerHTML = "";
+
+  bubbles.generateBubbles(".bubble-container");
+});
+
 
 refreshButtton.addEventListener("click", () => {
 
@@ -114,3 +127,5 @@ playButton.addEventListener("click", () => {
     isPlayButtonDisabled = true;
   }
 });
+
+
